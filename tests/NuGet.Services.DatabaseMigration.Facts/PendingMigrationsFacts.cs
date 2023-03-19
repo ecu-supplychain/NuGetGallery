@@ -39,7 +39,7 @@ namespace NuGet.Services.DatabaseMigration.Facts
                 return;
             }
 
-            const string connectionString = @"Data Source=(localdb)\mssqllocaldb; Initial Catalog=master; Integrated Security=True; MultipleActiveResultSets=True";
+            const string connectionString = @"Data Source=(local); Initial Catalog=master; Integrated Security=True; MultipleActiveResultSets=True";
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 await sqlConnection.OpenAsync();
@@ -66,14 +66,14 @@ namespace NuGet.Services.DatabaseMigration.Facts
                 gallerySqlConnectionFactory
                     .Setup(x => x.CreateAsync())
                     .ReturnsAsync(() => new SqlConnection(
-                        $@"Data Source=(localdb)\mssqllocaldb; Initial Catalog={galleryDbName}; Integrated Security=True; MultipleActiveResultSets=True"));
+                        $@"Data Source=(local); Initial Catalog={galleryDbName}; Integrated Security=True; MultipleActiveResultSets=True"));
 
                 var supportRequestsDbName = $"PendingMigrationsTest{currentTimestamp}SupportRequests";
                 var supportRequestsSqlConnectionFactory = new Mock<ISqlConnectionFactory<SupportRequestDbConfiguration>>();
                 supportRequestsSqlConnectionFactory
                     .Setup(x => x.CreateAsync())
                     .ReturnsAsync(() => new SqlConnection(
-                        $@"Data Source=(localdb)\mssqllocaldb; Initial Catalog={supportRequestsDbName}; Integrated Security=True; MultipleActiveResultSets=True"));
+                        $@"Data Source=(local); Initial Catalog={supportRequestsDbName}; Integrated Security=True; MultipleActiveResultSets=True"));
 
                 var serviceProvider = new Mock<IServiceProvider>();
 
